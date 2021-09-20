@@ -5,16 +5,16 @@ import AVFoundation
     typealias DisplayLink = CADisplayLink
 #endif
 
-protocol DisplayLinkedQueueDelegate: AnyObject {
-    func queue(_ buffer: CMSampleBuffer)
-    func empty()
+protocol MediaLinkDelegate: AnyObject {
+    func mediaLink(_ mediaLink: MediaLink, didDequeue sampleBuffer: CMSampleBuffer)
+    func mediaLinkDidEmpty(_ mediaLink: MediaLink)
 }
 
-protocol DisplayLinkedQueueClockReference: AnyObject {
+protocol MediaLinkDataSource: AnyObject {
     var duration: TimeInterval { get }
 }
 
-final class DisplayLinkedQueue: NSObject {
+final class MediaLink: NSObject {
     static let defaultPreferredFramesPerSecond = 0
 
     var isPaused: Bool {
@@ -24,8 +24,8 @@ final class DisplayLinkedQueue: NSObject {
     var duration: TimeInterval {
         (displayLink?.timestamp ?? 0.0) - timestamp
     }
-    weak var delegate: DisplayLinkedQueueDelegate?
-    weak var clockReference: DisplayLinkedQueueClockReference?
+    weak var delegate: MediaLinkDelegate?
+    weak var dataSource: MediaLinkDataSource?
     private var timestamp: TimeInterval = 0.0
     private var buffer: CircularBuffer<CMSampleBuffer> = .init(256)
     private var displayLink: DisplayLink? {
@@ -36,7 +36,7 @@ final class DisplayLinkedQueue: NSObject {
             }
             displayLink.isPaused = true
             if #available(iOS 10.0, tvOS 10.0, *) {
-                displayLink.preferredFramesPerSecond = DisplayLinkedQueue.defaultPreferredFramesPerSecond
+                displayLink.preferredFramesPerSecond = Self.defaultPreferredFramesPerSecond
             } else {
                 displayLink.frameInterval = 1
             }
@@ -49,9 +49,6 @@ final class DisplayLinkedQueue: NSObject {
     func enqueue(_ buffer: CMSampleBuffer) {
         guard buffer.presentationTimeStamp != .invalid else {
             return
-        }
-        if self.buffer.isEmpty {
-            delegate?.queue(buffer)
         }
         _ = self.buffer.append(buffer)
     }
@@ -66,10 +63,10 @@ final class DisplayLinkedQueue: NSObject {
         }
         defer {
             if buffer.isEmpty {
-                delegate?.empty()
+                delegate?.mediaLinkDidEmpty(self)
             }
         }
-        let current = clockReference?.duration ?? duration
+        let current = dataSource?.duration ?? duration
         let targetTimestamp = first.presentationTimeStamp.seconds + first.duration.seconds
         if targetTimestamp < current {
             buffer.removeFirst()
@@ -78,12 +75,12 @@ final class DisplayLinkedQueue: NSObject {
         }
         if first.presentationTimeStamp.seconds <= current && current <= targetTimestamp {
             buffer.removeFirst()
-            delegate?.queue(first)
+            delegate?.mediaLink(self, didDequeue: first)
         }
     }
 }
 
-extension DisplayLinkedQueue: Running {
+extension MediaLink: Running {
     // MARK: Running
     func startRunning() {
         lockQueue.async {
@@ -102,7 +99,7 @@ extension DisplayLinkedQueue: Running {
                 return
             }
             self.displayLink = nil
-            self.clockReference = nil
+            self.dataSource = nil
             self.buffer.removeAll()
             self.isRunning.mutate { $0 = false }
         }

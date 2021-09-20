@@ -43,11 +43,6 @@ final class VideoIOComponent: IOComponent {
     }
     lazy var encoder = H264Encoder()
     lazy var decoder = H264Decoder()
-    lazy var queue: DisplayLinkedQueue = {
-        let queue = DisplayLinkedQueue()
-        queue.delegate = self
-        return queue
-    }()
 
     private(set) var effects: Set<VideoEffect> = []
 
@@ -451,13 +446,11 @@ extension VideoIOComponent {
 
 extension VideoIOComponent {
     func startDecoding() {
-        queue.startRunning()
         decoder.startRunning()
     }
 
     func stopDecoding() {
         decoder.stopRunning()
-        queue.stopRunning()
         renderer?.enqueue(nil)
     }
 
@@ -482,20 +475,7 @@ extension VideoIOComponent: AVCaptureVideoDataOutputSampleBufferDelegate {
 extension VideoIOComponent: VideoDecoderDelegate {
     // MARK: VideoDecoderDelegate
     func sampleOutput(video sampleBuffer: CMSampleBuffer) {
-        queue.enqueue(sampleBuffer)
+        mixer?.mediaLink.enqueue(sampleBuffer)
     }
 }
 
-extension VideoIOComponent: DisplayLinkedQueueDelegate {
-    // MARK: DisplayLinkedQueue
-    func queue(_ buffer: CMSampleBuffer) {
-        renderer?.enqueue(buffer)
-        if let mixer = mixer {
-            mixer.delegate?.mixer(mixer, didOutput: buffer)
-        }
-    }
-
-    func empty() {
-        mixer?.didBufferEmpty(self)
-    }
-}

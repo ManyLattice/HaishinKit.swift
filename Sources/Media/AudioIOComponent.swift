@@ -4,7 +4,7 @@ import AVFoundation
 import SwiftPMSupport
 #endif
 
-final class AudioIOComponent: IOComponent, DisplayLinkedQueueClockReference {
+final class AudioIOComponent: IOComponent, MediaLinkDataSource {
     lazy var encoder = AudioCodec()
     let lockQueue = DispatchQueue(label: "com.haishinkit.HaishinKit.AudioIOComponent.lock")
 
@@ -180,7 +180,7 @@ extension AudioIOComponent: AudioCodecDelegate {
     // MARK: AudioConverterDelegate
     func audioCodec(_ codec: AudioCodec, didSet formatDescription: CMFormatDescription?) {
         guard let formatDescription = formatDescription else {
-            mixer?.videoIO.queue.clockReference = nil
+            mixer?.mediaLink.dataSource = nil
             return
         }
         #if os(iOS)
@@ -195,7 +195,7 @@ extension AudioIOComponent: AudioCodecDelegate {
         #else
             audioFormat = AVAudioFormat(cmAudioFormatDescription: formatDescription)
         #endif
-        mixer?.videoIO.queue.clockReference = self
+        mixer?.mediaLink.dataSource = self
     }
 
     func audioCodec(_ codec: AudioCodec, didOutput sample: UnsafeMutableAudioBufferListPointer, presentationTimeStamp: CMTime) {
@@ -208,8 +208,8 @@ extension AudioIOComponent: AudioCodecDelegate {
             return
         }
 
-        if let queue = mixer?.videoIO.queue, queue.isPaused {
-            queue.isPaused = false
+        if let mediaLink = mixer?.mediaLink, mediaLink.isPaused {
+            mediaLink.isPaused = false
         }
 
         buffer.frameLength = buffer.frameCapacity

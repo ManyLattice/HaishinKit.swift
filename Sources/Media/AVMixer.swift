@@ -146,6 +146,12 @@ public class AVMixer {
         return _videoIO!
     }
 
+    lazy var mediaLink: MediaLink = {
+        var mediaLink = MediaLink()
+        mediaLink.delegate = self
+        return mediaLink
+    }()
+
     deinit {
         dispose()
     }
@@ -189,13 +195,25 @@ extension AVMixer {
 
 extension AVMixer {
     public func startDecoding(_ audioEngine: AVAudioEngine?) {
+        mediaLink.startRunning()
         audioIO.startDecoding(audioEngine)
         videoIO.startDecoding()
     }
 
     public func stopDecoding() {
+        mediaLink.stopRunning()
         audioIO.stopDecoding()
         videoIO.stopDecoding()
+    }
+}
+
+extension AVMixer: MediaLinkDelegate {
+    // MARK: MediaLinkDelegate
+    func mediaLink(_ mediaLink: MediaLink, didDequeue sampleBuffer: CMSampleBuffer) {
+        videoIO.renderer?.enqueue(sampleBuffer)
+    }
+
+    func mediaLinkDidEmpty(_ mediaLink: MediaLink) {
     }
 }
 
