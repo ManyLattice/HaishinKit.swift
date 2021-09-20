@@ -396,6 +396,9 @@
 		BC9CFA9323BDE8B700917EEF /* NetStreamRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9CFA9223BDE8B700917EEF /* NetStreamRenderer.swift */; };
 		BC9CFA9423BDE8B700917EEF /* NetStreamRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9CFA9223BDE8B700917EEF /* NetStreamRenderer.swift */; };
 		BC9CFA9523BDE8B700917EEF /* NetStreamRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9CFA9223BDE8B700917EEF /* NetStreamRenderer.swift */; };
+		BC9F9C7826F8C16600B01ED0 /* Choreographer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9F9C7726F8C16600B01ED0 /* Choreographer.swift */; };
+		BC9F9C7926F8C16600B01ED0 /* Choreographer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9F9C7726F8C16600B01ED0 /* Choreographer.swift */; };
+		BC9F9C7A26F8C16600B01ED0 /* Choreographer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC9F9C7726F8C16600B01ED0 /* Choreographer.swift */; };
 		BCA97B86263AC0F30027213C /* MP4BoxConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA97B85263AC0F30027213C /* MP4BoxConvertible.swift */; };
 		BCA97B87263AC0F30027213C /* MP4BoxConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA97B85263AC0F30027213C /* MP4BoxConvertible.swift */; };
 		BCA97B88263AC0F30027213C /* MP4BoxConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA97B85263AC0F30027213C /* MP4BoxConvertible.swift */; };
@@ -832,6 +835,7 @@
 		BC94E509263FEBB60094C169 /* MP4TrackRunBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MP4TrackRunBox.swift; sourceTree = "<group>"; };
 		BC94E52C264146120094C169 /* MP4ReaderConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MP4ReaderConvertible.swift; sourceTree = "<group>"; };
 		BC9CFA9223BDE8B700917EEF /* NetStreamRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetStreamRenderer.swift; sourceTree = "<group>"; };
+		BC9F9C7726F8C16600B01ED0 /* Choreographer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Choreographer.swift; sourceTree = "<group>"; };
 		BCA97B85263AC0F30027213C /* MP4BoxConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MP4BoxConvertible.swift; sourceTree = "<group>"; };
 		BCA97B89263AC1830027213C /* MP4Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MP4Box.swift; sourceTree = "<group>"; };
 		BCA97B8D263AC49B0027213C /* MP4MediaHeaderBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MP4MediaHeaderBox.swift; sourceTree = "<group>"; };
@@ -1324,6 +1328,7 @@
 				29B876891CD70AFE00FC07DA /* AudioIOComponent.swift */,
 				29B8768B1CD70AFE00FC07DA /* AVMixer.swift */,
 				2976A47D1D48C5C700B53EF2 /* AVRecorder.swift */,
+				BC9F9C7726F8C16600B01ED0 /* Choreographer.swift */,
 				29C263171D00804A0098D4EF /* GLHKView.swift */,
 				2976A4801D49025B00B53EF2 /* IOComponent.swift */,
 				2901A4ED1D437170002BBD23 /* MediaLink.swift */,
@@ -2000,6 +2005,7 @@
 				BCAD0C21263EFCEF00ADFB80 /* MP4SegmentIndexBox.swift in Sources */,
 				BCAD0C1B263EE1D000ADFB80 /* MP4Util.swift in Sources */,
 				29EA87D81E79A0090043A5F8 /* URL+Extension.swift in Sources */,
+				BC9F9C7826F8C16600B01ED0 /* Choreographer.swift in Sources */,
 				BCA97B86263AC0F30027213C /* MP4BoxConvertible.swift in Sources */,
 				29B876BC1CD70B3900FC07DA /* ByteArray.swift in Sources */,
 				BCC1A6CF26445AF500661156 /* MP4TrackExtendsBox.swift in Sources */,
@@ -2198,6 +2204,7 @@
 				BCAD0C22263EFCEF00ADFB80 /* MP4SegmentIndexBox.swift in Sources */,
 				BCAD0C1C263EE1D000ADFB80 /* MP4Util.swift in Sources */,
 				BCA97B87263AC0F30027213C /* MP4BoxConvertible.swift in Sources */,
+				BC9F9C7926F8C16600B01ED0 /* Choreographer.swift in Sources */,
 				BC558269240BB40E00011AC0 /* RTMPStreamInfo.swift in Sources */,
 				BCC1A6D026445AF500661156 /* MP4TrackExtendsBox.swift in Sources */,
 				29EA87E01E79A0810043A5F8 /* CMSampleBuffer+Extension.swift in Sources */,
@@ -2301,6 +2308,7 @@
 				BC94E50C263FEBB60094C169 /* MP4TrackRunBox.swift in Sources */,
 				BC94E508263FEA7F0094C169 /* MP4TrackFragmentBaseMediaDecodeTimeBox.swift in Sources */,
 				BC7A23F625171C8F0089F77C /* MTHKView.swift in Sources */,
+				BC9F9C7A26F8C16600B01ED0 /* Choreographer.swift in Sources */,
 				29EB3E1A1ED0589B001CAE8B /* NetStream.swift in Sources */,
 				29EB3E211ED059FB001CAE8B /* RTMPHandshake.swift in Sources */,
 				BCC1A6ED2644850F00661156 /* MP4TrackHeaderBox.swift in Sources */,
