@@ -35,5 +35,6 @@ let package = Package(
                     "Platforms",
                     "TS"
                 ])
-    ]
+    ],
+    swiftLanguageVersions: [.v5]
 )
